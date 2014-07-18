@@ -1,0 +1,2 @@
+graft office2plone
+include *.cfg *.rst *.in LICENSE

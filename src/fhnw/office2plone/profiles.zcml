@@ -1,0 +1,14 @@
+<configure
+   xmlns="http://namespaces.zope.org/zope"
+   xmlns:gs="http://namespaces.zope.org/genericsetup"
+   i18n_domain="fhnwoffice2plone">
+
+  <gs:registerProfile
+     name="default"
+     title="FHNW Upload MS-Office documents to Plone"
+     directory="profiles/default"
+     description="Extension profile for Upload MS-Office documents to Plone."
+     provides="Products.GenericSetup.interfaces.EXTENSION"
+     />
+     
+</configure>
