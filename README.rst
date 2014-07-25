@@ -7,9 +7,7 @@ Upload MS-Office documents to Plone
 INSTALL
 =======
 
-::
-
-    $ pip install office2plone
+Add fhnw.office2plone to buildout.
 
 USAGE
 =====
@@ -21,8 +19,8 @@ DEVELOP
 
 ::
 
-    $ git tf clone --deep http://batfs.adm.ds.fhnw.ch:8080/tfs/FHNW/ $/BA-DEV/02-Web/00-Core/fhnw.office2plone/trunk  fhnw.office2plone
-    $ cd office2plone
+    $ git clone https://github.com/FHNW/fhnw.office2plone.git
+    $ cd fhnw.office2plone
     $ make
 
 RUNNING TESTS
