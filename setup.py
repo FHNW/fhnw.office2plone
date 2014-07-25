@@ -41,6 +41,7 @@ setup(
     test_suite = "fhnw.office2plone.tests",
     install_requires=[
         'setuptools',
+        'atreal.massloader',
     ],
     extras_require={
         'test': [
