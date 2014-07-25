@@ -1,17 +1,17 @@
 from Products.Five import BrowserView
 from Acquisition import aq_inner
 from Products.CMFCore.utils import getToolByName
-import zipfile
-import tempfile
 import subprocess
-from atreal.massloader.interfaces import IMassLoader
 from lxml import etree
-import hashlib
 from cStringIO import StringIO
+from Products.statusmessages.interfaces import IStatusMessage
 
 from transaction import commit
 
+from atreal.massloader.interfaces import IMassLoader
 from collective.quickupload.portlet.quickuploadportlet import JAVASCRIPT
+
+from fhnw.office2plone import FHNWOffice2PloneMessageFactory as _
 
 class ProcessError(Exception):
     """Raised if a spawned process terminated with exit code != 0.
@@ -59,7 +59,8 @@ class DocxImporter(BrowserView):
         self._extract_html(data, filename)
 
         if not form.get('ajax'):
-        # XXX        IStatusMessage
+            IStatusMessage(self.request).addStatusMessage(_("Uploaded document."),
+                                                          type="info")
             self.request.response.redirect(self.context.absolute_url())
 
     def _extract_images(self, up_file):

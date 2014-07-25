@@ -17,7 +17,7 @@ def test_suite():
     for test in robot_tests:
         suite.addTests([
             layered(robotsuite.RobotTestSuite(test),
-                    layer=PTCT_ROBOT_TESTING),
+                    layer=PTC_ROBOT_TESTING),
         ])
     return suite
 

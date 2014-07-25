@@ -1,21 +1,11 @@
 # -*- coding: utf-8 -*-
 from AccessControl import Unauthorized
 from Acquisition import aq_inner
-from Products.Archetypes.event import ObjectEditedEvent
-from Products.statusmessages.interfaces import IStatusMessage
 from ZODB.POSException import ConflictError
 from collective.quickupload import logger
-from collective.quickupload import siteMessageFactory as _
 from collective.quickupload.interfaces import IQuickUploadCapable
-from collective.quickupload.interfaces import IQuickUploadFileFactory
-from collective.quickupload.interfaces import IQuickUploadFileSetter
-from collective.quickupload.interfaces import IQuickUploadFileUpdater
-from plone.i18n.normalizer.interfaces import IIDNormalizer
 from thread import allocate_lock
 from zope import component
-from zope import interface
-from zope.lifecycleevent import ObjectModifiedEvent
-from zope.event import notify
 
 import transaction
 
@@ -25,7 +15,6 @@ from zope.container.interfaces import INameChooser
 upload_lock = allocate_lock()
 
 
-from collective.quickupload.browser.uploadcapable import MissingExtension
 from collective.quickupload.browser.uploadcapable import get_id_from_filename
 from collective.quickupload.browser.uploadcapable import QuickUploadCapableFileFactory
 
@@ -86,21 +75,18 @@ class QuickUploadOfficeCapableFileFactory(QuickUploadCapableFileFactory):
                     from fhnw.office2plone.browser.docx_importer import DocxImporter
                     docximport = DocxImporter(self.context, request)
                     docximport.docx_import()
-                    #                    from zope.component import queryMultiAdapter
-                    #queryMultiAdapter((self.context, request),
-                    #                  name='docx-import')()
                 except ImportError:
                     error = ''
-#                except Unauthorized:
-#                    error = u'serverErrorNoPermission'
-#                except ConflictError:
-#                    # rare with xhr upload / happens sometimes with flashupload
-#                    error = u'serverErrorZODBConflict'
-#                except ValueError:
-#                    error = u'serverErrorDisallowedType'
-#                except Exception, e:
-#                    error = u'serverError'
-#                    logger.exception(e)
+                except Unauthorized:
+                    error = u'serverErrorNoPermission'
+                except ConflictError:
+                    # rare with xhr upload / happens sometimes with flashupload
+                    error = u'serverErrorZODBConflict'
+                except ValueError:
+                    error = u'serverErrorDisallowedType'
+                except Exception, e:
+                    error = u'serverError'
+                    logger.exception(e)
 
                 if error:
                     if error == u'serverError':
@@ -109,9 +95,7 @@ class QuickUploadOfficeCapableFileFactory(QuickUploadCapableFileFactory):
                             "the file has been created with a bad id, "
                             "can't find %s", newid)
                 else:
-                    obj = getattr(context, newid, None)
-                    if obj:
-                        obj._at_rename_after_creation = False
+                    pass
 
                 #@TODO : rollback if there has been an error
                 transaction.commit()
@@ -120,6 +104,6 @@ class QuickUploadOfficeCapableFileFactory(QuickUploadCapableFileFactory):
 
         result['error'] = error
         if not error:
-            result['success'] = obj
+            result['success'] = filename
 
         return result
