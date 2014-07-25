@@ -58,8 +58,8 @@ class DocxImporter(BrowserView):
         # Extract text to HTML
         self._extract_html(data, filename)
 
-        # XXX        IStatusMessage
         if not form.get('ajax'):
+        # XXX        IStatusMessage
             self.request.response.redirect(self.context.absolute_url())
 
     def _extract_images(self, up_file):
@@ -87,12 +87,6 @@ class DocxImporter(BrowserView):
         doc_body = etree.tostring(html_body).replace('body>', 'div>') # XXXXX
         doc.setText(doc_body)
         self.context.setDefaultPage(id)
-
-    def getUploadUrl(self):
-        """ return upload url in current folder """
-        ploneview = self.context.restrictedTraverse('@@plone')
-        folder_url = ploneview.getCurrentFolderUrl()
-        return '%s/@@quick_upload' % folder_url
 
     def javascript(self):
         return JAVASCRIPT
