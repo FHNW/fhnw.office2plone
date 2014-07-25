@@ -43,8 +43,9 @@ class DocxImporter(BrowserView):
 
 
     def docx_import(self):
-        up_file = self.request.form['doc']
-        filename = up_file.filename
+        form = self.request.form
+        up_file = form['doc']
+        filename = getattr(up_file, 'filename', '')
 
         # We need to save the data *before* extracting images
         # otherwise it is recognized as a ZIP not as office document
@@ -58,7 +59,8 @@ class DocxImporter(BrowserView):
         self._extract_html(data, filename)
 
         # XXX        IStatusMessage
-        self.request.response.redirect(self.context.absolute_url())
+        if not form.get('ajax'):
+            self.request.response.redirect(self.context.absolute_url())
 
     def _extract_images(self, up_file):
         status, log = self.massloader.process(up_file, False)

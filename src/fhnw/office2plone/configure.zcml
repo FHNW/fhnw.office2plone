@@ -5,6 +5,12 @@
     i18n_domain="fhnwoffice2plone">
 
   <five:registerPackage package="." />
+
+  <class class="Products.ATContentTypes.content.folder.ATFolder">
+    <implements interface=".uploadcapable.IQuickUploadOfficeCapable" />
+  </class>
+  <adapter factory=".uploadcapable.QuickUploadOfficeCapableFileFactory" />
+
   <include file="profiles.zcml" />
   <include package=".browser" />
   
