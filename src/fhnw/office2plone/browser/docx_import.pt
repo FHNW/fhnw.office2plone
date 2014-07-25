@@ -3,7 +3,7 @@
         <div id="contentfolder-importform" i18n:domain="fhnwoffice2plone">
             <fieldset id="contentfolder-importform-fieldset">
                 <legend i18n:translate="label_import_office_document">Import DOCX</legend>
-                <form action="@@docx-import" method="post" enctype="multipart/form-data" id="content-import-form">
+        <!--        <form action="@@docx-import" method="post" enctype="multipart/form-data" id="content-import-form">
 
                     <div class="form-row">
                         <label i18n:translate="label_file">File</label>
@@ -12,7 +12,20 @@
                     <div class="form-control">
                         <input class="context" type="submit" value="Upload" i18n:attributes="value label_upload" />
                     </div>
-                </form>
+                </form> -->
+<script type="text/javascript" tal:content="view/javascript">
+      </script>
+      <div class="uploaderContainer">
+          <input type="hidden"
+                 name="uploadUrl"
+                 class="uploadUrl"
+                 tal:attributes="value view/getUploadUrl" />
+          <input type="hidden"
+                 name="uploadData"
+                 class="uploadData"
+                 value=""
+                 />
+      </div>
             </fieldset>
         </div>
     </metal:slot>
