@@ -104,6 +104,6 @@ class QuickUploadOfficeCapableFileFactory(QuickUploadCapableFileFactory):
 
         result['error'] = error
         if not error:
-            result['success'] = filename
+            result['success'] = self.context
 
         return result
